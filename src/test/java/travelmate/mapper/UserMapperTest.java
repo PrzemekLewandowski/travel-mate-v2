@@ -3,6 +3,7 @@ package travelmate.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.myapp.travelmate.mapper.UserMapper;
+import com.myapp.travelmate.model.Country;
 import com.myapp.travelmate.model.Role;
 import com.myapp.travelmate.model.User;
 import com.myapp.travelmate.viewmodel.UserViewModel;
@@ -20,35 +21,50 @@ class UserMapperTest {
 
     private static User user;
     private static User mappedUser;
-    private static Role role;
-    private static Role changedRole;
-    private static UserViewModel mappedUserViewModel;
     private static UserViewModel userViewModel;
+    private static UserViewModel mappedUserViewModel;
 
     @BeforeAll
     static void setup() {
-        role = new Role();
+        Role role = new Role();
         role.setName("ROLE_TEST");
-        changedRole = new Role();
-        changedRole.setName("ROLE_CHANGED_TEST");
+
+        Country country = new Country();
+        country.setName("country");
+
+        Country changedCountry = new Country();
+        country.setName("changed Country");
 
         user = new User();
-        user.setUsername("name");
-        user.setPassword("password");
         user.setId(1L);
+        user.setUsername("username");
+        user.setName("name");
+        user.setPassword("password");
+        user.setCity("city");
+        user.setYearOfBirth(1994);
         user.setRoles(Collections.singletonList(role));
+        user.setPreferredCountries(Collections.singletonList(country));
+
 
         mappedUser = new User();
-        mappedUser.setUsername("name");
+        mappedUser.setId(2L);
+        mappedUser.setUsername("username");
+        mappedUser.setName("name");
         mappedUser.setPassword("password");
-        mappedUser.setId(1L);
+        mappedUser.setCity("city");
+        mappedUser.setYearOfBirth(1990);
         mappedUser.setRoles(Stream.of(role)
+                .collect(Collectors.toList()));
+        mappedUser.setPreferredCountries(Stream.of(country)
                 .collect(Collectors.toList()));
 
         userViewModel = new UserViewModel();
-        userViewModel.setRoles(Stream.of(changedRole)
+        userViewModel.setUsername("changed username");
+        userViewModel.setName("changed name");
+        userViewModel.setCity("changed city");
+        userViewModel.setYearOfBirth(1969);
+        userViewModel.setPreferredCountries(Stream.of(changedCountry)
                 .collect(Collectors.toList()));
-        userViewModel.setUsername("changed name");
 
         mappedUserViewModel = UserMapper.INSTANCE.userViewModel(user);
         mappedUser = UserMapper.INSTANCE.user(userViewModel, mappedUser);
@@ -59,18 +75,28 @@ class UserMapperTest {
         assertThat(user.getUsername()).isEqualTo(mappedUserViewModel.getUsername());
     }
 
-
     @Test
-    void shouldMapUserRolesToUserViewModel() {
-        assertThat(user.getRoles()
-                .get(0)
-                .getName()).isEqualTo(mappedUserViewModel.getRoles()
-                .get(0)
-                .getName());
+    void shouldMapNameToUserViewModel() {
+        assertThat(user.getName()).isEqualTo(mappedUserViewModel.getName());
     }
 
     @Test
-    void shouldChangeEditedTimeForUserViewModel() {
+    void shouldMapCityToUserViewModel() {
+        assertThat(user.getCity()).isEqualTo(mappedUserViewModel.getCity());
+    }
+
+    @Test
+    void shouldMapYearOfBirthToUserViewModel() {
+        assertThat(user.getYearOfBirth()).isEqualTo(mappedUserViewModel.getYearOfBirth());
+    }
+
+    @Test
+    void shouldMapPreferredCountriesToUserViewModel() {
+        assertThat(user.getPreferredCountries()).isEqualTo(mappedUserViewModel.getPreferredCountries());
+    }
+
+    @Test
+    void shouldChangeEditingTimeForUserViewModel() {
         assertThat(mappedUserViewModel.getEditedAt()).isNotNull();
     }
 
@@ -80,22 +106,40 @@ class UserMapperTest {
     }
 
     @Test
-    void shouldMapRolesToUserEntity() {
-        assertThat(userViewModel.getRoles()
-                .get(0)
-                .getName()).isEqualTo(mappedUser.getRoles()
-                .get(0)
-                .getName());
+    void shouldMapNameToUserEntity() {
+        assertThat(userViewModel.getName()).isEqualTo(mappedUser.getName());
     }
 
     @Test
-    void shouldChangeEditedTimeForUserEntity() {
+    void shouldMapCityToUserEntity() {
+        assertThat(userViewModel.getCity()).isEqualTo(mappedUser.getCity());
+    }
+
+    @Test
+    void shouldMapYearOfBirthToUserEntity() {
+        assertThat(userViewModel.getYearOfBirth()).isEqualTo(mappedUser.getYearOfBirth());
+    }
+
+    @Test
+    void shouldChangeEditingTimeForUserEntity() {
         assertThat(userViewModel.getEditedAt()).isEqualTo(mappedUser.getEditedAt());
     }
 
     @Test
+    void shouldChangePreferredCountriesForUserEntity() {
+        assertThat(userViewModel.getPreferredCountries()).isEqualTo(mappedUser.getPreferredCountries());
+    }
+
+    @Test
+    void shouldNotChangeRolesForUserEntity() {
+        assertThat(mappedUser.getRoles()
+                .get(0)
+                .getName()).isEqualTo("ROLE_TEST");
+    }
+
+    @Test
     void shouldNotChangeIdForUserEntity() {
-        assertThat(mappedUser.getId()).isEqualTo(1L);
+        assertThat(mappedUser.getId()).isEqualTo(2L);
     }
 
     @Test

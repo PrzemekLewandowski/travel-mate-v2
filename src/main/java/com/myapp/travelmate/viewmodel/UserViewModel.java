@@ -1,7 +1,7 @@
 package com.myapp.travelmate.viewmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.myapp.travelmate.model.Role;
+import com.myapp.travelmate.model.Country;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,7 +24,25 @@ public class UserViewModel {
     @NonNull
     @NotNull
     private String username;
+
     @NonNull
     @NotNull
-    private List<Role> roles;
+    private String name;
+
+    @NonNull
+    @NotNull
+    private String city;
+
+    @NotNull
+    private int yearOfBirth;
+
+    private LocalDateTime preferredTravelDateFrom;
+
+    private LocalDateTime preferredTravelDateTo;
+
+    private int preferredBudgetValueFrom;
+
+    private int preferredBudgetValueTo;
+
+    private List<Country> preferredCountries;
 }

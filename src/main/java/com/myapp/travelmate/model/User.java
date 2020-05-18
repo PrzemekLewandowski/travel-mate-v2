@@ -40,9 +40,31 @@ public class User implements UserDetails {
     @NotNull
     private String username;
 
+    @NotNull
+    private String name;
+
     @JsonIgnore
     @NotNull
     private String password;
+
+    @NotNull
+    private String city;
+
+    @NotNull
+    private int yearOfBirth;
+
+    private LocalDateTime preferredTravelDateFrom;
+
+    private LocalDateTime preferredTravelDateTo;
+
+    private int preferredBudgetValueFrom;
+
+    private int preferredBudgetValueTo;
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_COUNTRIES", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "COUNTRY_ID")})
+    private List<Country> preferredCountries;
 
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
