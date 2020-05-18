@@ -9,12 +9,14 @@ import org.mapstruct.factory.Mappers;
 
 //@Mapper(uses = {UserMapperResolver.class})
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+public abstract class UserMapper {
 
-    UserViewModel userViewModel(User user);
+    public static final UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    User user(UserViewModel userViewModel, @MappingTarget User user);
+    public abstract UserViewModel userViewModel(User user);
 
-    //    User user(UserViewModel userViewModel, @MappingTarget User user);
+    public abstract User user(UserViewModel userViewModel, @MappingTarget User user);
+
+    // TODO: might be useful in the future
+    ///   User user(UserViewModel userViewModel, @MappingTarget User user); //NOSONAR
 }

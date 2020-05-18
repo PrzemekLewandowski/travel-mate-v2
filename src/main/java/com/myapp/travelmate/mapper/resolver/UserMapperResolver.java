@@ -18,8 +18,8 @@ public class UserMapperResolver {
 
     @ObjectFactory
     User resolve(UserViewModel userViewModel, @TargetType Class<User> type) {
-        return userViewModel != null && userViewModel.getId() != null ? userRepository.findByUsername(userViewModel.getUsername())
-                .orElseThrow(() -> new InputMismatchException(String.format("Can't find user with id: %s.", userViewModel.getId()))) : new User();
+        return userViewModel != null ? userRepository.findByUsername(userViewModel.getUsername())
+                .orElseThrow(() -> new InputMismatchException(String.format("Can't find user with username: %s.", userViewModel.getUsername()))) : new User();
     }
 
 }

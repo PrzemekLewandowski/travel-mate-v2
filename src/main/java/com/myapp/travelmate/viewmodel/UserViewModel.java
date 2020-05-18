@@ -10,7 +10,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -18,10 +17,10 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class UserViewModel {
+
     @JsonIgnore
     private final LocalDateTime editedAt = LocalDateTime.now();
-    @Id
-    @NotNull Long id;
+
     @NonNull
     @NotNull
     private String username;
