@@ -1,8 +1,7 @@
-package travelmate.mapper;
+package com.myapp.travelmate.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.myapp.travelmate.mapper.UserMapper;
 import com.myapp.travelmate.model.Country;
 import com.myapp.travelmate.model.Role;
 import com.myapp.travelmate.model.User;
@@ -25,7 +24,7 @@ class UserMapperTest {
     private static UserViewModel mappedUserViewModel;
 
     @BeforeAll
-    static void setup() {
+    static void setUp() {
         Role role = new Role();
         role.setName("ROLE_TEST");
 

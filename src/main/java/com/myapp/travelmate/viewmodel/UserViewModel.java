@@ -3,9 +3,7 @@ package com.myapp.travelmate.viewmodel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myapp.travelmate.model.Country;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -14,8 +12,6 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class UserViewModel {
 
     @JsonIgnore
