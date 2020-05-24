@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Country implements Serializable {
 
     @Id
-    private Long id;
+    private Long String;
 
     private String name;
 }

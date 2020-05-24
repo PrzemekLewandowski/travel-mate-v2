@@ -18,7 +18,7 @@ import java.util.List;
 public class Post implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
     private String title;
 

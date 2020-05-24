@@ -21,7 +21,7 @@ public class PostViewModel {
     private final LocalDateTime editedAt = LocalDateTime.now();
 
     @Id
-    private long id;
+    private String id;
 
     @NotNull
     @NonNull

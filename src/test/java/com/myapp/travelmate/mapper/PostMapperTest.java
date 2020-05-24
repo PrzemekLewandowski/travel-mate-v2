@@ -42,8 +42,43 @@ class PostMapperTest {
     }
 
     @Test
-    void shouldMapTitleToPostViewModel() {
+    void shouldMapAuthorToPostViewModel() {
         assertThat(post.getAuthor()).isEqualTo(mappedPostViewModel.getAuthor());
     }
 
+    @Test
+    void shouldMapTitleToPostViewModel() {
+        assertThat(post.getTitle()).isEqualTo(mappedPostViewModel.getTitle());
+    }
+
+    @Test
+    void shouldMapDescriptionToPostViewModel() {
+        assertThat(post.getDescription()).isEqualTo(mappedPostViewModel.getDescription());
+    }
+
+    @Test
+    void shouldMapTravelDateFromToPostViewModel() {
+        assertThat(post.getTravelDateFrom()).isEqualTo(mappedPostViewModel.getTravelDateFrom());
+    }
+
+    @Test
+    void shouldMapTravelDateToToPostViewModel() {
+        assertThat(post.getTravelDateTo()).isEqualTo(mappedPostViewModel.getTravelDateTo());
+    }
+
+    @Test
+    void shouldMapBudgetValueFromToPostViewModel() {
+        assertThat(post.getBudgetValueFrom()).isEqualTo(mappedPostViewModel.getBudgetValueFrom());
+    }
+
+    @Test
+    void shouldMapBudgetValueToToPostViewModel() {
+        assertThat(post.getBudgetValueTo()).isEqualTo(mappedPostViewModel.getBudgetValueTo());
+    }
+
+    @Test
+    void shouldMapCountriesToPostViewModel() {
+        assertThat(post.getCountries()).isEqualTo(mappedPostViewModel.getCountries());
+    }
 }
+

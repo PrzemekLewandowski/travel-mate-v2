@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
 
     @Id
-    private Long id;
+    private String id;
 
     @Indexed
     private String username;
@@ -32,6 +32,8 @@ public class User implements UserDetails {
     private String name;
 
     private String password;
+
+    private String email;
 
     private String city;
 

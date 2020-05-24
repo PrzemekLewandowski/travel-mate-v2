@@ -12,10 +12,10 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @Document(collection = "roles")
-public class Role implements Serializable {
+public enum Role implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
     private String name;
 }

@@ -7,7 +7,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 

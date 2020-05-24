@@ -93,7 +93,7 @@ class UserMapperTest {
     }
 
     @Test
-    void shouldChangeEditingTimeForUserViewModel() {
+    void shouldSetEditingTimeForUserViewModel() {
         assertThat(mappedUserViewModel.getEditedAt()).isNotNull();
     }
 
