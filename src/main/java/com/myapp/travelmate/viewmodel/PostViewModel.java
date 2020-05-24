@@ -7,10 +7,10 @@ import com.myapp.travelmate.model.User;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Getter

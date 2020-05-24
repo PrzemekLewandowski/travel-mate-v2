@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -40,5 +41,5 @@ public class UserViewModel {
 
     private int preferredBudgetValueTo;
 
-    private List<Country> preferredCountries;
+    private Set<Country> preferredCountries;
 }

@@ -22,10 +22,11 @@ class UserMapperTest {
     private static User mappedUser;
     private static UserViewModel userViewModel;
     private static UserViewModel mappedUserViewModel;
+    private static Role role;
 
     @BeforeAll
     static void setUp() {
-        Role role = new Role();
+        role = new Role();
         role.setName("ROLE_TEST");
 
         Country country = new Country();
@@ -41,8 +42,8 @@ class UserMapperTest {
         user.setPassword("password");
         user.setCity("city");
         user.setYearOfBirth(1994);
-        user.setRoles(Collections.singletonList(role));
-        user.setPreferredCountries(Collections.singletonList(country));
+        user.setRoles(Collections.singleton(role));
+        user.setPreferredCountries(Collections.singleton(country));
 
 
         mappedUser = new User();
@@ -52,18 +53,15 @@ class UserMapperTest {
         mappedUser.setPassword("password");
         mappedUser.setCity("city");
         mappedUser.setYearOfBirth(1990);
-        mappedUser.setRoles(Stream.of(role)
-                .collect(Collectors.toList()));
-        mappedUser.setPreferredCountries(Stream.of(country)
-                .collect(Collectors.toList()));
+        mappedUser.setRoles(Stream.of(role).collect(Collectors.toSet()));
+        mappedUser.setPreferredCountries(Stream.of(country).collect(Collectors.toSet()));
 
         userViewModel = new UserViewModel();
         userViewModel.setUsername("changed username");
         userViewModel.setName("changed name");
         userViewModel.setCity("changed city");
         userViewModel.setYearOfBirth(1969);
-        userViewModel.setPreferredCountries(Stream.of(changedCountry)
-                .collect(Collectors.toList()));
+        userViewModel.setPreferredCountries(Stream.of(changedCountry).collect(Collectors.toSet()));
 
         mappedUserViewModel = UserMapper.INSTANCE.userViewModel(user);
         mappedUser = UserMapper.INSTANCE.user(userViewModel, mappedUser);
@@ -131,9 +129,7 @@ class UserMapperTest {
 
     @Test
     void shouldNotChangeRolesForUserEntity() {
-        assertThat(mappedUser.getRoles()
-                .get(0)
-                .getName()).isEqualTo("ROLE_TEST");
+        assertThat(mappedUser.getRoles().contains(role) && mappedUser.getRoles().size() == 1);
     }
 
     @Test
