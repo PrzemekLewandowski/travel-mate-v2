@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.validation.constraints.Email;
 
 @Getter
 @Setter
@@ -33,6 +34,7 @@ public class User implements UserDetails {
 
     private String password;
 
+    @Email
     private String email;
 
     private String city;
@@ -53,10 +55,10 @@ public class User implements UserDetails {
 
     private String avatarFileName;
 
-    private Set<Post> posts = new HashSet<>();
+    @DBRef
+    private Set<String> preferredCountries;
 
-    private Set<Country> preferredCountries;
-
+    @DBRef
     private Set<Role> roles;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
@@ -67,7 +69,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toSet());
     }
 
     @Override

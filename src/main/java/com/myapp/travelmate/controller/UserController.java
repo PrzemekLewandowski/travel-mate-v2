@@ -1,7 +1,7 @@
 package com.myapp.travelmate.controller;
 
 import com.myapp.travelmate.service.UserService;
-import com.myapp.travelmate.viewmodel.UserRegisterViewModel;
+import com.myapp.travelmate.viewmodel.SignUpRequest;
 import com.myapp.travelmate.viewmodel.UserViewModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,10 +28,5 @@ public class UserController {
     @GetMapping("/users/{id}")
     public UserViewModel getUser(@PathVariable String id) {
         return userService.getUser(id);
-    }
-
-    @PostMapping("/users")
-    public UserViewModel addUser(@RequestBody UserRegisterViewModel userRegisterViewModel){
-        return userService.addUser(userRegisterViewModel);
     }
 }

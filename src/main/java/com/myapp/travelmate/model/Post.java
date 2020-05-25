@@ -5,17 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @Document
-public class Post implements Serializable {
+public class Post {
 
     @Id
     private String id;
@@ -36,9 +36,14 @@ public class Post implements Serializable {
 
     private String imageFileName;
 
+    @DBRef
     private User author;
 
-    private List<Country> countries;
+    @DBRef
+    private Set<User> participants;
+
+    @DBRef
+    private Set<String> countries;
 
     private Long numberOfViews;
 
