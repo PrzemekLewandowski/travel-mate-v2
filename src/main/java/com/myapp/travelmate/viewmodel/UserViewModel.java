@@ -1,7 +1,6 @@
 package com.myapp.travelmate.viewmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.myapp.travelmate.model.Country;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -27,6 +26,10 @@ public class UserViewModel {
 
     @NonNull
     @NotNull
+    private String email;
+
+    @NonNull
+    @NotNull
     private String city;
 
     @NotNull
@@ -40,5 +43,5 @@ public class UserViewModel {
 
     private int preferredBudgetValueTo;
 
-    private Set<Country> preferredCountries;
+    private Set<String> preferredCountries;
 }

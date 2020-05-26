@@ -2,7 +2,6 @@ package com.myapp.travelmate.viewmodel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.myapp.travelmate.model.Country;
 import com.myapp.travelmate.model.User;
 import lombok.Getter;
 import lombok.NonNull;
@@ -51,7 +50,7 @@ public class PostViewModel {
     private User author;
 
     @NotNull
-    private List<Country> countries;
+    private List<String> countries;
 
     private Long numberOfViews;
 }

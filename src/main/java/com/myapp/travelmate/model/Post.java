@@ -42,7 +42,6 @@ public class Post {
     @DBRef
     private Set<User> participants;
 
-    @DBRef
     private Set<String> countries;
 
     private Long numberOfViews;

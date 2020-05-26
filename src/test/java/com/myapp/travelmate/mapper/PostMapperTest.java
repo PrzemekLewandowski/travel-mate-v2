@@ -2,7 +2,6 @@ package com.myapp.travelmate.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.myapp.travelmate.model.Country;
 import com.myapp.travelmate.model.Post;
 import com.myapp.travelmate.model.User;
 import com.myapp.travelmate.viewmodel.PostViewModel;
@@ -25,9 +24,6 @@ class PostMapperTest {
         User author = new User();
         author.setName("author name");
 
-        Country country = new Country();
-        country.setName("country name");
-
         post = new Post();
         post.setTitle("title");
         post.setDescription("description");
@@ -36,7 +32,7 @@ class PostMapperTest {
         post.setBudgetValueFrom(10);
         post.setBudgetValueTo(100);
         post.setAuthor(author);
-        post.setCountries(Collections.singletonList(country));
+        post.setCountries(Collections.singleton("country"));
 
         mappedPostViewModel = PostMapper.INSTANCE.postViewModel(post);
     }

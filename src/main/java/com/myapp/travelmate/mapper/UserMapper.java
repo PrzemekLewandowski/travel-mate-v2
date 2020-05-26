@@ -1,13 +1,13 @@
 package com.myapp.travelmate.mapper;
 
 import com.myapp.travelmate.model.User;
+import com.myapp.travelmate.viewmodel.SignUpRequest;
 import com.myapp.travelmate.viewmodel.UserViewModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-//@Mapper(uses = {UserMapperResolver.class})
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class UserMapper {
 
@@ -17,6 +17,6 @@ public abstract class UserMapper {
 
     public abstract User user(UserViewModel userViewModel, @MappingTarget User user);
 
-    // TODO: might be useful in the future
-    ///   User user(UserViewModel userViewModel, @MappingTarget User user); //NOSONAR
+    public abstract  User user(SignUpRequest signUpRequest);
+
 }

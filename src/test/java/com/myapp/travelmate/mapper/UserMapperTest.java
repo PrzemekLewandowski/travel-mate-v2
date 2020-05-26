@@ -2,8 +2,8 @@ package com.myapp.travelmate.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.myapp.travelmate.model.Country;
 import com.myapp.travelmate.model.Role;
+import com.myapp.travelmate.model.RoleEnum;
 import com.myapp.travelmate.model.User;
 import com.myapp.travelmate.viewmodel.UserViewModel;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,41 +27,38 @@ class UserMapperTest {
     @BeforeAll
     static void setUp() {
         role = new Role();
-        role.setName("ROLE_TEST");
-
-        Country country = new Country();
-        country.setName("country");
-
-        Country changedCountry = new Country();
-        country.setName("changed Country");
+        role.setName(RoleEnum.ROLE_USER);
 
         user = new User();
-        user.setId(1L);
+        user.setId("1L");
         user.setUsername("username");
         user.setName("name");
         user.setPassword("password");
         user.setCity("city");
         user.setYearOfBirth(1994);
         user.setRoles(Collections.singleton(role));
-        user.setPreferredCountries(Collections.singleton(country));
+        user.setPreferredCountries(Collections.singleton("country"));
 
 
         mappedUser = new User();
-        mappedUser.setId(2L);
+        mappedUser.setId("2L");
         mappedUser.setUsername("username");
         mappedUser.setName("name");
         mappedUser.setPassword("password");
         mappedUser.setCity("city");
         mappedUser.setYearOfBirth(1990);
-        mappedUser.setRoles(Stream.of(role).collect(Collectors.toSet()));
-        mappedUser.setPreferredCountries(Stream.of(country).collect(Collectors.toSet()));
+        mappedUser.setRoles(Stream.of(role)
+                .collect(Collectors.toSet()));
+        mappedUser.setPreferredCountries(Stream.of("country")
+                .collect(Collectors.toSet()));
 
         userViewModel = new UserViewModel();
         userViewModel.setUsername("changed username");
         userViewModel.setName("changed name");
         userViewModel.setCity("changed city");
         userViewModel.setYearOfBirth(1969);
-        userViewModel.setPreferredCountries(Stream.of(changedCountry).collect(Collectors.toSet()));
+        userViewModel.setPreferredCountries(Stream.of("Changed country")
+                .collect(Collectors.toSet()));
 
         mappedUserViewModel = UserMapper.INSTANCE.userViewModel(user);
         mappedUser = UserMapper.INSTANCE.user(userViewModel, mappedUser);
@@ -129,12 +126,14 @@ class UserMapperTest {
 
     @Test
     void shouldNotChangeRolesForUserEntity() {
-        assertThat(mappedUser.getRoles().contains(role) && mappedUser.getRoles().size() == 1);
+        assertThat(mappedUser.getRoles()).contains(role);
+        assertThat(mappedUser.getRoles()
+                .size()).isEqualTo(1);
     }
 
     @Test
     void shouldNotChangeIdForUserEntity() {
-        assertThat(mappedUser.getId()).isEqualTo(2L);
+        assertThat(mappedUser.getId()).isEqualTo("2L");
     }
 
     @Test

@@ -55,7 +55,6 @@ public class User implements UserDetails {
 
     private String avatarFileName;
 
-    @DBRef
     private Set<String> preferredCountries;
 
     @DBRef
