@@ -8,9 +8,9 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

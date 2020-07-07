@@ -1,54 +1,137 @@
 package com.myapp.travelmate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Set;
 
-@NoArgsConstructor
-@Setter
-@Getter
 @Document
-public class Post {
+public final class Post {
 
+    private final String title;
+    private final String description;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final LocalDateTime travelDateFrom;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final LocalDateTime travelDateTo;
+    private final int budgetValueFrom;
+    private final int budgetValueTo;
+    private final String imageFileName;
+    @DBRef
+    private final User author;
+    private final Set<String> countries;
+    @DBRef
+    private final Set<User> participants;
+    private final Long numberOfViews;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final LocalDateTime createdAt;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final LocalDateTime editedAt;
     @Id
     private String id;
 
-    private String title;
+    private Post(Builder builder) {
+        this.title = builder.title;
+        this.description = builder.description;
+        this.travelDateFrom = builder.travelDateFrom;
+        this.travelDateTo = builder.travelDateTo;
+        this.budgetValueFrom = builder.budgetValueFrom;
+        this.budgetValueTo = builder.budgetValueTo;
+        this.imageFileName = builder.imageFileName;
+        this.author = builder.author;
+        this.countries = builder.countries;
+        this.participants = builder.participants;
+        this.numberOfViews = builder.numberOfViews;
+        this.createdAt = builder.createdAt;
+        this.editedAt = builder.editedAt;
+    }
 
-    private String description;
+    public static class Builder {
+        private String title;
+        private String description;
+        private LocalDateTime travelDateFrom;
+        private LocalDateTime travelDateTo;
+        private int budgetValueFrom;
+        private int budgetValueTo;
+        private String imageFileName;
+        private User author;
+        private Set<String> countries;
+        private Set<User> participants = Collections.emptySet();
+        private Long numberOfViews = 0L;
+        private LocalDateTime createdAt = LocalDateTime.now();
+        private LocalDateTime editedAt = LocalDateTime.now();
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime travelDateFrom;
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime travelDateTo;
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
 
-    private int budgetValueFrom;
+        public Builder travelDateFrom(LocalDateTime travelDateFrom) {
+            this.travelDateFrom = travelDateFrom;
+            return this;
+        }
 
-    private int budgetValueTo;
+        public Builder travelDateTo(LocalDateTime travelDateTo) {
+            this.travelDateTo = travelDateTo;
+            return this;
+        }
 
-    private String imageFileName;
+        public Builder budgetValueFrom(int budgetValueFrom) {
+            this.budgetValueFrom = budgetValueFrom;
+            return this;
+        }
 
-    @DBRef
-    private User author;
+        public Builder budgetValueTo(int budgetValueTo) {
+            this.budgetValueTo = budgetValueTo;
+            return this;
+        }
 
-    @DBRef
-    private Set<User> participants;
+        public Builder imageFileName(String imageFileName) {
+            this.imageFileName = imageFileName;
+            return this;
+        }
 
-    private Set<String> countries;
+        public Builder author(User author) {
+            this.author = author;
+            return this;
+        }
 
-    private Long numberOfViews;
+        public Builder countries(Set<String> countries) {
+            this.countries = countries;
+            return this;
+        }
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime createdAt;
+        public Builder participants(Set<User> participants) {
+            this.participants = participants;
+            return this;
+        }
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime editedAt;
+        public Builder numberOfViews(long numberOfViews) {
+            this.numberOfViews = numberOfViews;
+            return this;
+        }
+
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder editedAt(LocalDateTime editedAt) {
+            this.editedAt = editedAt;
+            return this;
+        }
+
+        public Post build() {
+            return new Post(this);
+        }
+    }
 }
