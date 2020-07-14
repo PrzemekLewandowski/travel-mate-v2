@@ -10,6 +10,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class PostMapper {
 
+    abstract Post.Builder postViewModelToPostBuilder(PostViewModel postViewModel);
+
     public static final PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
     public abstract PostViewModel postViewModel(Post post);

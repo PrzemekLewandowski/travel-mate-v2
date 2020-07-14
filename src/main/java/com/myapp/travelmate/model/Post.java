@@ -1,7 +1,8 @@
 package com.myapp.travelmate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.Id;
+import com.myapp.travelmate.mapper.ObjectBuilder;
+import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,8 +10,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;
 
-@Document
-public final class Post {
+@Getter
+@Document(collection = "posts")
+public final class Post  extends AbstractDocument{
 
     private final String title;
     private final String description;
@@ -27,12 +29,7 @@ public final class Post {
     @DBRef
     private final Set<User> participants;
     private final Long numberOfViews;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private final LocalDateTime createdAt;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private final LocalDateTime editedAt;
-    @Id
-    private String id;
+
 
     private Post(Builder builder) {
         this.title = builder.title;
@@ -46,11 +43,9 @@ public final class Post {
         this.countries = builder.countries;
         this.participants = builder.participants;
         this.numberOfViews = builder.numberOfViews;
-        this.createdAt = builder.createdAt;
-        this.editedAt = builder.editedAt;
     }
 
-    public static class Builder {
+    public static class Builder  implements ObjectBuilder<Post>{
         private String title;
         private String description;
         private LocalDateTime travelDateFrom;
@@ -62,8 +57,7 @@ public final class Post {
         private Set<String> countries;
         private Set<User> participants = Collections.emptySet();
         private Long numberOfViews = 0L;
-        private LocalDateTime createdAt = LocalDateTime.now();
-        private LocalDateTime editedAt = LocalDateTime.now();
+
 
         public Builder title(String title) {
             this.title = title;
@@ -120,16 +114,8 @@ public final class Post {
             return this;
         }
 
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
 
-        public Builder editedAt(LocalDateTime editedAt) {
-            this.editedAt = editedAt;
-            return this;
-        }
-
+        @Override
         public Post build() {
             return new Post(this);
         }

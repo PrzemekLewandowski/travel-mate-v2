@@ -1,5 +1,6 @@
 package com.myapp.travelmate.service;
 
+import com.myapp.travelmate.decorator.CreateTimestampDecorator;
 import com.myapp.travelmate.exception.ResourceAlreadyExistsException;
 import com.myapp.travelmate.mapper.UserMapper;
 import com.myapp.travelmate.model.Role;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 @RequiredArgsConstructor
@@ -37,14 +37,17 @@ public class AuthService {
             throw new ResourceAlreadyExistsException("Error: Email is already in use!");
         }
 
-        Role roleUser = roleRepository.findByName(RoleEnum.ROLE_USER)
+        Role roleUser = roleRepository
+                .findByName(RoleEnum.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 
         signUpRequest.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
-        User user = UserMapper.INSTANCE.user(signUpRequest);
-        user.setRoles(Collections.singleton(roleUser));
-        user.setCreatedAt(LocalDateTime.now());
+        User.Builder userBuilder = UserMapper.INSTANCE.userSignUpRequestToUser(signUpRequest);
+        userBuilder.roles(Collections.singleton(roleUser));
+        User user = userBuilder.build();
+        CreateTimestampDecorator createTimestampDecorator = new CreateTimestampDecorator(user);
+        createTimestampDecorator.setTimestamp();
         userRepository.save(user);
 
         return new ResponseEntity<>("User registered successfully!", HttpStatus.CREATED);

@@ -1,7 +1,5 @@
 package com.myapp.travelmate.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.myapp.travelmate.model.Post;
 import com.myapp.travelmate.model.User;
 import com.myapp.travelmate.viewmodel.PostViewModel;
@@ -13,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
 class PostMapperTest {
 
@@ -21,18 +21,20 @@ class PostMapperTest {
 
     @BeforeAll
     static void setUp() {
-        User author = new User();
-        author.setName("author name");
+        User author = new User.Builder()
+                .name("author name")
+                .build();
 
-        post = new Post();
-        post.setTitle("title");
-        post.setDescription("description");
-        post.setTravelDateFrom(LocalDateTime.now());
-        post.setTravelDateTo(LocalDateTime.now());
-        post.setBudgetValueFrom(10);
-        post.setBudgetValueTo(100);
-        post.setAuthor(author);
-        post.setCountries(Collections.singleton("country"));
+        post = new Post.Builder()
+                .title("title")
+                .description("description")
+                .travelDateFrom(LocalDateTime.now())
+                .travelDateTo(LocalDateTime.now())
+                .budgetValueFrom(10)
+                .budgetValueTo(100)
+                .author(author)
+                .countries(Collections.singleton("country"))
+                .build();
 
         mappedPostViewModel = PostMapper.INSTANCE.postViewModel(post);
     }

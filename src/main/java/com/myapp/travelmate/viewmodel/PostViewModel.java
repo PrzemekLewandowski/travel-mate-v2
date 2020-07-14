@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -50,7 +50,7 @@ public class PostViewModel {
     private User author;
 
     @NotNull
-    private List<String> countries;
+    private Set<String> countries;
 
     private Long numberOfViews;
 }

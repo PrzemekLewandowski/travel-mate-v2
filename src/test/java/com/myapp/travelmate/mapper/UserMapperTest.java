@@ -1,7 +1,5 @@
 package com.myapp.travelmate.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.myapp.travelmate.model.Role;
 import com.myapp.travelmate.model.RoleEnum;
 import com.myapp.travelmate.model.User;
@@ -14,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 class UserMapperTest {
@@ -29,39 +29,40 @@ class UserMapperTest {
         role = new Role();
         role.setName(RoleEnum.ROLE_USER);
 
-        user = new User();
-        user.setId("1L");
-        user.setUsername("username");
-        user.setName("name");
-        user.setPassword("password");
-        user.setCity("city");
-        user.setYearOfBirth(1994);
-        user.setRoles(Collections.singleton(role));
-        user.setPreferredCountries(Collections.singleton("country"));
+        user = new User.Builder()
+                .username("username")
+                .name("name")
+                .password("password")
+                .city("city")
+                .email("email")
+                .yearOfBirth(1994)
+                .roles(Collections.singleton(role))
+                .preferredCountries(Collections.singleton("country"))
+                .build();
 
-
-        mappedUser = new User();
-        mappedUser.setId("2L");
-        mappedUser.setUsername("username");
-        mappedUser.setName("name");
-        mappedUser.setPassword("password");
-        mappedUser.setCity("city");
-        mappedUser.setYearOfBirth(1990);
-        mappedUser.setRoles(Stream.of(role)
-                .collect(Collectors.toSet()));
-        mappedUser.setPreferredCountries(Stream.of("country")
-                .collect(Collectors.toSet()));
+        mappedUser = new User.Builder()
+                .username("username")
+                .name("name")
+                .password("password")
+                .city("city")
+                .email("email")
+                .yearOfBirth(1990)
+                .roles(Collections.singleton(role))
+                .preferredCountries(Collections.singleton("country"))
+                .build();
 
         userViewModel = new UserViewModel();
         userViewModel.setUsername("changed username");
         userViewModel.setName("changed name");
         userViewModel.setCity("changed city");
         userViewModel.setYearOfBirth(1969);
-        userViewModel.setPreferredCountries(Stream.of("Changed country")
+        userViewModel.setPreferredCountries(Stream
+                .of("Changed country")
                 .collect(Collectors.toSet()));
 
         mappedUserViewModel = UserMapper.INSTANCE.userViewModel(user);
-        mappedUser = UserMapper.INSTANCE.user(userViewModel, mappedUser);
+        mappedUser = UserMapper.INSTANCE.userViewModelToUser(userViewModel);
+//        mappedUser = UserMapper.INSTANCE.user(userViewModel, mappedUser);
     }
 
     @Test
@@ -127,7 +128,8 @@ class UserMapperTest {
     @Test
     void shouldNotChangeRolesForUserEntity() {
         assertThat(mappedUser.getRoles()).contains(role);
-        assertThat(mappedUser.getRoles()
+        assertThat(mappedUser
+                .getRoles()
                 .size()).isEqualTo(1);
     }
 
